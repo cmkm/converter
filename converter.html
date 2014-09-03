@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <title>Converter</title>
+    <meta charset="utf-8">
+
+    <style type="text/css">
+    
+        body {
+            font-size: 20px;
+            font-family: "Open Sans", "Calibri", sans-serif;
+            text-align: center;
+        }
+
+        span {
+            font-size: 2em;
+        }
+
+        fieldset {
+            display: inline-block;
+            border: 0;
+        }
+
+        legend {
+            margin: 0 auto;
+        }
+
+        input, select {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            height: 2.3em;
+            padding: 0.2em;
+            font-size: 1em;
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #666;
+        }
+    
+        .warning {
+            color: red;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+
+    <h1>Number Converter</h1>
+
+    <p>For CSCI 3201, fall 2014.</p>
+
+    <noscript>
+        <p class="warning">Requires Javascript, sorry.</p>
+    </noscript>
+
+    <fieldset>
+        <legend>Input</legend>
+
+        <input type="text" name="input" id="input" autofocus>
+
+        <select name="inputbase">
+            <option value="2">base 2</option>
+            <option value="8">base 8</option>
+            <option value="10" selected>base 10</option>
+            <option value="16">base 16</option>
+        </select>
+
+    </fieldset>
+
+    <span> = </span>
+
+    <fieldset>
+        <legend>Output</legend>
+
+        <select name="outputbase">
+            <option value="2">base 2</option>
+            <option value="8">base 8</option>
+            <option value="10" selected>base 10</option>
+            <option value="16">base 16</option>
+        </select>
+
+        <input type="text" name="output" id="output" disabled>
+    </fieldset>
+
+</body>
+
+<script type="text/javascript">
+
+    var converter = {};
+
+    // get input fields from DOM
+    converter.input_field = document.getElementsByName("input")[0];
+    converter.input_base = document.getElementsByName("inputbase")[0];
+    converter.output_field = document.getElementsByName("output")[0];
+    converter.output_base = document.getElementsByName("outputbase")[0];
+
+    // set default values
+    converter.input_field.value = 0;
+    converter.input_base.value = 10;
+    converter.output_field.value = 0;
+    converter.output_base.value = 10;
+
+    // gets input, makes it an int from given base, converts it to other given base
+    converter.update = function(e) {
+        var input_parsed = parseInt(converter.input_field.value, converter.input_base.value);
+        var output_parsed = input_parsed.toString(converter.output_base.value);    
+        converter.output_field.value = output_parsed;
+    }
+
+    // register event listeners to modify the output
+    converter.input_field.addEventListener("keyup", converter.update);
+    converter.input_base.addEventListener("change", converter.update);
+    converter.output_base.addEventListener("change", converter.update);
+
+</script>
+
+</html>
